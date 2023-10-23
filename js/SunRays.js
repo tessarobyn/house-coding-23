@@ -71,14 +71,21 @@ export class SunRay {
     if (num2 > Math.PI * 2) {
       num2 -= Math.PI * 2;
     }
-    const num = Math.floor(Math.random() * (num2 - num1 + 1)) + num1;
-    return num + Math.PI;
+    return Math.floor(Math.random() * (num2 - num1 + 1)) + num1;
+  }
+  checkCollisionWithRing(ringX, ringY, ringRadius) {
+    const distanceToRingCentre =
+      ((this.x - ringX) ** 2 + (this.y - ringY) ** 2) ** (1 / 2);
+    if (distanceToRingCentre + this.radius >= ringRadius) {
+      this.angle = this.setRandomAngle();
+      this.movingTowardsEarth = true;
+    }
   }
   checkCollisionWithEarth(earthX, earthY, earthRadius) {
     const distanceToEarthCentre =
       ((this.x - earthX) ** 2 + (this.y - earthY) ** 2) ** (1 / 2);
     if (distanceToEarthCentre - this.radius <= earthRadius) {
-      this.angle = this.setRandomAngle();
+      this.angle = this.setRandomAngle() + Math.PI;
       this.movingTowardsEarth = false;
     }
   }

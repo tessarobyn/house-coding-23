@@ -124,6 +124,12 @@ class Game {
             this.earth.y,
             this.earth.radius
           );
+        } else {
+          this.sunRays[i].checkCollisionWithRing(
+            this.gasRing.x,
+            this.gasRing.y,
+            this.gasRing.radius
+          );
         }
         this.sunRays[i].moveOnAngle();
         this.sunRays[i].draw();
