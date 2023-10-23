@@ -1,6 +1,7 @@
 import { setCanvasSize } from "./utils.js";
 import { Earth } from "./Earth.js";
 import { Sun } from "./Sun.js";
+import { GasRing } from "./GasRing.js";
 
 class Game {
   constructor() {
@@ -13,6 +14,7 @@ class Game {
     this._fillBackground();
     this._addEarth();
     this._addSun();
+    this._addGasRing();
     this.start = false;
   }
   _fillBackground = () => {
@@ -29,25 +31,50 @@ class Game {
     );
     this.earth.draw();
   };
+  _addGasRing = () => {
+    const smallest = this.width < this.height ? this.width : this.height;
+    this.gasRing = new GasRing(
+      this.ctx,
+      this.width * 0.7,
+      this.height / 2,
+      smallest / 3
+    );
+    this.gasRing.draw();
+  };
   update = () => {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this._fillBackground();
-    this.earth.draw();
     if (this.start) {
       this.sun.draw();
     }
+    this.gasRing.draw();
+    this.earth.draw();
+
     window.requestAnimationFrame(this.update.bind(this));
   };
   _moveEarthToStartingPosition = () => {
     this.earth.moveToX(this.width / 2);
 
-    let setupFrames;
+    let setupEarthFrames;
     if (Math.round(this.earth.x) == this.width / 2) {
-      cancelAnimationFrame(setupFrames);
+      cancelAnimationFrame(setupEarthFrames);
       this.start = true;
     } else {
-      setupFrames = window.requestAnimationFrame(
+      setupEarthFrames = window.requestAnimationFrame(
         this._moveEarthToStartingPosition.bind(this)
+      );
+    }
+  };
+  _moveRingToStartingPosition = () => {
+    this.gasRing.moveToX(this.width / 2);
+
+    let setupRingFrames;
+    if (Math.round(this.gasRing.x) == this.width / 2) {
+      cancelAnimationFrame(setupRingFrames);
+      this.start = true;
+    } else {
+      setupRingFrames = window.requestAnimationFrame(
+        this._moveRingToStartingPosition.bind(this)
       );
     }
   };
@@ -62,6 +89,7 @@ class Game {
   };
   setup = () => {
     this._moveEarthToStartingPosition();
+    this._moveRingToStartingPosition();
   };
 }
 
