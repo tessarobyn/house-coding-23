@@ -30,9 +30,25 @@ h1 {
   line-height: 80%;
   text-transform: uppercase;
   margin: 0;
-  /* font-stretch: 80%; */
+  font-stretch: 80%;
   width: 0;
   overflow: visible;
+}
+
+.uc {
+  font-stretch: ultra-condensed;
+}
+
+.c {
+  font-stretch: condensed;
+}
+
+.e {
+  font-stretch: expanded;
+}
+
+.ue {
+  font-stretch: ultra-expanded;
 }
 
 .buttonContainer {
