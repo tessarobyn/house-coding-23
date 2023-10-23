@@ -1,0 +1,76 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: "roboto", sans-serif;
+  background-color: #000000;
+  /* 262b40, 1f2333, 171A26 */
+  color: #e4e9e8;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+}
+
+.titleContainer {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+h1 {
+  padding: 20px;
+  font-size: 9em;
+  font-family: "Anybody", sans-serif;
+  font-weight: 900;
+  line-height: 80%;
+  text-transform: uppercase;
+  margin: 0;
+  font-stretch: 80%;
+  width: 0;
+  overflow: visible;
+}
+
+.uc {
+  font-stretch: ultra-condensed;
+}
+
+.c {
+  font-stretch: condensed;
+}
+
+.e {
+  font-stretch: expanded;
+}
+
+.ue {
+  font-stretch: ultra-expanded;
+}
+
+.buttonContainer {
+  position: fixed;
+
+  bottom: 20px;
+  right: 20px;
+}
+
+.buttonContainer > button {
+  background-color: #e55934;
+
+  border: none;
+  padding: 10px 20px;
+  font-family: "Anybody", sans-serif;
+  font-size: 3.5em;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #1f2333;
+  transition: background-color 0.2s ease;
+}
+
+.buttonContainer > button:hover {
+  background-color: #e74b1f;
+}
