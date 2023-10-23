@@ -1,11 +1,31 @@
+import { mouseDown } from "./utils.js";
+
 export class Earth {
-  constructor(ctx, x, y, radius) {
+  constructor(canvas, ctx, x, y, radius) {
+    this.canvas = canvas;
     this.ctx = ctx;
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.rotation = 0;
+    this.prevMousePos = [0, 0];
+    this.rotating = false;
   }
+  rotate(event) {
+    if (this.rotating) {
+      console.log(this.rotating);
+      const mousePos = mouseDown(event, this.canvas);
+      const num = Math.abs(mousePos[0] - this.prevMousePos[0]) * 0.0025;
+      if (this.prevMousePos[0] < mousePos[0]) {
+        this.rotation -= num;
+      } else {
+        // console.log((mousePos[0] - this.prevMousePos[0]) * 0.005);
+        this.rotation += num;
+      }
+      this.prevMousePos = mousePos;
+    }
+  }
+
   draw() {
     this.ctx.setTransform(1, 0, 0, 1, this.x, this.y);
     this.ctx.rotate(Math.PI * this.rotation);
@@ -13,7 +33,7 @@ export class Earth {
     this.ty = this.y;
     this.y = 0;
     this.x = 0;
-    this.rotation += 0.01;
+
     const earth = new Path2D();
     earth.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
     this.gradient = this.ctx.createLinearGradient(

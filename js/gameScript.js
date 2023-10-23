@@ -27,6 +27,7 @@ class Game {
   _addEarth = () => {
     const smallest = this.width < this.height ? this.width : this.height;
     this.earth = new Earth(
+      this.canvas,
       this.ctx,
       this.width * 0.7,
       this.height / 2,
@@ -143,3 +144,15 @@ class Game {
 export const game = new Game();
 // Starts animation loop - could move so it is when gameplay starts?
 window.requestAnimationFrame(game.update.bind(game));
+
+window.addEventListener("mousedown", () => {
+  game.earth.rotating = true;
+});
+
+window.addEventListener("mouseup", () => {
+  game.earth.rotating = false;
+});
+
+window.addEventListener("mousemove", (event) => {
+  game.earth.rotate(event);
+});
