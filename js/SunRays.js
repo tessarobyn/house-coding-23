@@ -14,6 +14,7 @@ export class SunRay {
       earthY
     );
     this.hadFirstCollision = false;
+    this.escaped = false;
   }
   moveX() {
     this.x += 1;
