@@ -27,7 +27,6 @@ export class SunRay {
       ((this.x - this.originX) ** 2 + (this.y - this.originY) ** 2) ** (1 / 2) +
       this.radius;
     if (distanceTravelled >= distanceFromCentreToSurface) {
-      console.log("hit earth");
       this.towardsPlanet = false;
     } else {
       this.y += diffY / this.magic;
@@ -80,7 +79,6 @@ export class SunRay {
   checkCollisionWithRing(ringX, ringY, ringRadius) {
     const distanceToRingCentre =
       ((this.x - ringX) ** 2 + (this.y - ringY) ** 2) ** (1 / 2);
-    console.log(distanceToRingCentre);
     if (distanceToRingCentre + this.radius >= ringRadius) {
       const radiusAngle = this.calculateAngleBetweenTwoPoints(
         ringX,
