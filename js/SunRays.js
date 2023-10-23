@@ -13,7 +13,7 @@ export class SunRay {
       earthX,
       earthY
     );
-    this.movingTowardsEarth = true;
+    this.hadFirstCollision = false;
   }
   moveX() {
     this.x += 1;
@@ -80,15 +80,15 @@ export class SunRay {
   checkCollisionWithRing(ringX, ringY, ringRadius) {
     const distanceToRingCentre =
       ((this.x - ringX) ** 2 + (this.y - ringY) ** 2) ** (1 / 2);
+    console.log(distanceToRingCentre);
     if (distanceToRingCentre + this.radius >= ringRadius) {
       const radiusAngle = this.calculateAngleBetweenTwoPoints(
-        this.x,
-        this.y,
         ringX,
-        ringY
+        ringY,
+        this.x,
+        this.y
       );
-      this.angle = this.setRandomAngle(radiusAngle);
-      this.movingTowardsEarth = true;
+      this.angle = this.setRandomAngle(radiusAngle) + Math.PI;
     }
   }
   checkCollisionWithEarth(earthX, earthY, earthRadius) {
@@ -102,8 +102,7 @@ export class SunRay {
         this.y
       );
       this.angle = this.setRandomAngle(radiusAngle);
-      console.log(radiusAngle);
-      this.movingTowardsEarth = false;
+      this.hadFirstCollision = true;
     }
   }
   moveOnAngle() {

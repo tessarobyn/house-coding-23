@@ -66,7 +66,7 @@ class Game {
       this.earth.y
     );
     this.sunRays.push(sunRay);
-    setTimeout(this._addSunRays.bind(this), 1000);
+    setTimeout(this._addSunRays.bind(this), 2000);
   };
   _moveEarthToStartingPosition = () => {
     this.earth.moveToX(this.width / 2, 2);
@@ -118,19 +118,19 @@ class Game {
       }
 
       for (let i = 0; i < this.sunRays.length; i++) {
-        if (this.sunRays[i].movingTowardsEarth) {
-          this.sunRays[i].checkCollisionWithEarth(
-            this.earth.x,
-            this.earth.y,
-            this.earth.radius
-          );
-        } else {
+        this.sunRays[i].checkCollisionWithEarth(
+          this.earth.x,
+          this.earth.y,
+          this.earth.radius
+        );
+        if (this.sunRays[i].hadFirstCollision) {
           this.sunRays[i].checkCollisionWithRing(
             this.gasRing.x,
             this.gasRing.y,
             this.gasRing.radius
           );
         }
+
         this.sunRays[i].moveOnAngle();
         this.sunRays[i].draw();
       }
