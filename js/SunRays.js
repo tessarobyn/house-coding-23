@@ -4,7 +4,7 @@ export class SunRay {
     this.x = x;
     this.y = y;
     this.radius = sunRadius / 10;
-    this.magic = 100;
+    this.magic = 2;
     this.originX = x;
     this.originY = y;
     this.angle = 0;
@@ -28,6 +28,38 @@ export class SunRay {
       this.y += diffY / this.magic;
       this.x += diffX / this.magic;
     }
+  }
+  calculateAngleBetweenTwoPoints(x1, y1, x2, y2) {
+    // Calculates angle from north direction (a bearing in radians)
+    const theta = Math.atan(Math.abs(x1 - x2) / Math.abs(y1 - y2));
+    if (x1 < x2 && y1 > y2) {
+      return theta;
+    } else if (x1 < x2 && y1 < y2) {
+      return Math.PI - theta;
+    } else if (x1 > x2 && y1 < y2) {
+      return Math.PI + theta;
+    } else if (x1 > x2 && y1 > y2) {
+      return Math.PI * 2 - theta;
+    }
+
+    // Edge cases
+    if (x1 == x2 && y1 > y2) {
+      return 0;
+    } else if (y1 == y2 && x1 < x2) {
+      return Math.PI * 0.5;
+    } else if (x1 == x2 && y1 < y2) {
+      return Math.PI;
+    } else if (y1 == y2 && x1 > x2) {
+      return Math.PI * 1.5;
+    }
+    console.log("ERROR!");
+  }
+  setAngle(angle) {
+    this.angle = angle;
+  }
+  moveOnAngle() {
+    this.x += this.magic * Math.sin(this.angle);
+    this.y -= this.magic * Math.cos(this.angle);
   }
   draw() {
     const sunRay = new Path2D();

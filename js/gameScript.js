@@ -98,13 +98,21 @@ class Game {
     this.earth.draw();
     if (this.start) {
       this.sun.draw();
-      if (this.sunRay.towardsPlanet) {
-        this.sunRay.moveTowardsPlanet(
-          this.earth.x,
-          this.earth.y,
-          this.earth.radius
-        );
-      }
+      //   if (this.sunRay.towardsPlanet) {
+      //     this.sunRay.moveTowardsPlanet(
+      //       this.earth.x,
+      //       this.earth.y,
+      //       this.earth.radius
+      //     );
+      //   }
+      const angle = this.sunRay.calculateAngleBetweenTwoPoints(
+        this.sun.x,
+        this.sun.y,
+        this.earth.x,
+        this.earth.y
+      );
+      this.sunRay.setAngle(angle);
+      this.sunRay.moveOnAngle();
 
       this.sunRay.draw();
     }
