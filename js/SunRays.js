@@ -1,5 +1,5 @@
 export class SunRay {
-  constructor(ctx, x, y, sunRadius) {
+  constructor(ctx, x, y, sunRadius, sunX, sunY, earthX, earthY) {
     this.ctx = ctx;
     this.x = x;
     this.y = y;
@@ -7,7 +7,12 @@ export class SunRay {
     this.magic = 2;
     this.originX = x;
     this.originY = y;
-    this.angle = 0;
+    this.angle = this.calculateAngleBetweenTwoPoints(
+      sunX,
+      sunY,
+      earthX,
+      earthY
+    );
     this.towardsPlanet = true;
   }
   moveX() {

@@ -12,12 +12,13 @@ class Game {
     this.width = this.canvas.width;
     this.height = this.canvas.height;
     this.ctx = this.canvas.getContext("2d");
+    this.sunRays = [];
     this._fillBackground();
     this._addEarth();
     this._addSun();
-    this._addSunRay();
     this._addGasRing();
     this.start = false;
+    this.addedSunRay = false;
   }
   _fillBackground = () => {
     this.ctx.fillStyle = "rgb(31, 35, 51)";
@@ -52,14 +53,20 @@ class Game {
       smallest / 10
     );
   };
-  _addSunRay = () => {
+  _addSunRays = () => {
     const smallest = this.width < this.height ? this.width : this.height;
-    this.sunRay = new SunRay(
+    const sunRay = new SunRay(
       this.ctx,
       this.width * 0.2,
       this.height * 0.2,
-      smallest / 10
+      smallest / 10,
+      this.sun.x,
+      this.sun.y,
+      this.earth.x,
+      this.earth.y
     );
+    this.sunRays.push(sunRay);
+    setTimeout(this._addSunRays.bind(this), 1000);
   };
   _moveEarthToStartingPosition = () => {
     this.earth.moveToX(this.width / 2, 2);
@@ -105,16 +112,15 @@ class Game {
       //       this.earth.radius
       //     );
       //   }
-      const angle = this.sunRay.calculateAngleBetweenTwoPoints(
-        this.sun.x,
-        this.sun.y,
-        this.earth.x,
-        this.earth.y
-      );
-      this.sunRay.setAngle(angle);
-      this.sunRay.moveOnAngle();
+      if (!this.addedSunRay) {
+        this._addSunRays();
+        this.addedSunRay = true;
+      }
 
-      this.sunRay.draw();
+      for (let i = 0; i < this.sunRays.length; i++) {
+        this.sunRays[i].moveOnAngle();
+        this.sunRays[i].draw();
+      }
     }
 
     window.requestAnimationFrame(this.update.bind(this));
