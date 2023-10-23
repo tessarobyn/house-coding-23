@@ -13,7 +13,7 @@ export class SunRay {
       earthX,
       earthY
     );
-    this.towardsPlanet = true;
+    this.movingTowardsEarth = true;
   }
   moveX() {
     this.x += 1;
@@ -61,6 +61,17 @@ export class SunRay {
   }
   setAngle(angle) {
     this.angle = angle;
+  }
+  setRandomAngle() {
+    return Math.floor(Math.random() * (Math.PI * 2 + 1));
+  }
+  checkCollisionWithEarth(earthX, earthY, earthRadius) {
+    const distanceToEarthCentre =
+      ((this.x - earthX) ** 2 + (this.y - earthY) ** 2) ** (1 / 2);
+    if (distanceToEarthCentre - this.radius <= earthRadius) {
+      this.angle = this.setRandomAngle();
+      this.movingTowardsEarth = false;
+    }
   }
   moveOnAngle() {
     this.x += this.magic * Math.sin(this.angle);

@@ -118,6 +118,14 @@ class Game {
       }
 
       for (let i = 0; i < this.sunRays.length; i++) {
+        if (this.sunRays[i].movingTowardsEarth) {
+          this.sunRays[i].checkCollisionWithEarth(
+            this.earth.x,
+            this.earth.y,
+            this.earth.radius
+          );
+        }
+
         this.sunRays[i].moveOnAngle();
         this.sunRays[i].draw();
       }
