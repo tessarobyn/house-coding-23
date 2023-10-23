@@ -66,7 +66,7 @@ class Game {
       this.earth.y
     );
     this.sunRays.push(sunRay);
-    setTimeout(this._addSunRays.bind(this), 2000);
+    setTimeout(this._addSunRays.bind(this), 1500);
   };
   _moveEarthToStartingPosition = () => {
     this.earth.moveToX(this.width / 2, 2);
