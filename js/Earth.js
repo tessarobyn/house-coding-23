@@ -31,11 +31,11 @@ export class Earth {
     this.y = this.ty;
     this.x = this.tx;
   }
-  moveToX(dest) {
+  moveToX(dest, speed) {
     if (dest > this.x) {
-      this.x += 1;
+      this.x += speed;
     } else if (dest < this.x) {
-      this.x -= 1;
+      this.x -= speed;
     }
   }
 }

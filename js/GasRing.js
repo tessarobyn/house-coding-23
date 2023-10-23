@@ -11,11 +11,11 @@ export class GasRing {
     this.ctx.strokeStyle = "rgb(255,255,255)";
     this.ctx.stroke(gasRing);
   }
-  moveToX(dest) {
+  moveToX(dest, speed) {
     if (dest > this.x) {
-      this.x += 1;
+      this.x += speed;
     } else if (dest < this.x) {
-      this.x -= 1;
+      this.x -= speed;
     }
   }
 }
