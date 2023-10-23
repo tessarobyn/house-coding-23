@@ -11,18 +11,15 @@ export class GasRing {
       [Math.PI * 1.7, Math.PI * 1.8],
     ];
   }
-  draw() {
+  draw(rotation) {
     for (let i = 0; i < this.rings.length; i++) {
+      this.ctx.setTransform(1, 0, 0, 1, this.x, this.y);
+      this.ctx.rotate(Math.PI * rotation);
       const gasRing = new Path2D();
-      gasRing.arc(
-        this.x,
-        this.y,
-        this.radius,
-        this.rings[i][0],
-        this.rings[i][1]
-      );
+      gasRing.arc(0, 0, this.radius, this.rings[i][0], this.rings[i][1]);
       this.ctx.strokeStyle = "rgb(255,255,255)";
       this.ctx.stroke(gasRing);
+      this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
   }
   moveToX(dest, speed) {

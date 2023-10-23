@@ -7,28 +7,11 @@ export class Earth {
     this.x = x;
     this.y = y;
     this.radius = radius;
-    this.rotation = 0;
-    this.prevMousePos = [0, 0];
-    this.rotating = false;
-  }
-  rotate(event) {
-    if (this.rotating) {
-      console.log(this.rotating);
-      const mousePos = mouseDown(event, this.canvas);
-      const num = Math.abs(mousePos[0] - this.prevMousePos[0]) * 0.0025;
-      if (this.prevMousePos[0] < mousePos[0]) {
-        this.rotation -= num;
-      } else {
-        // console.log((mousePos[0] - this.prevMousePos[0]) * 0.005);
-        this.rotation += num;
-      }
-      this.prevMousePos = mousePos;
-    }
   }
 
-  draw() {
+  draw(rotation) {
     this.ctx.setTransform(1, 0, 0, 1, this.x, this.y);
-    this.ctx.rotate(Math.PI * this.rotation);
+    this.ctx.rotate(Math.PI * rotation);
     this.tx = this.x;
     this.ty = this.y;
     this.y = 0;

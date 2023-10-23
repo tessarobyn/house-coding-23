@@ -1,4 +1,4 @@
-import { setCanvasSize } from "./utils.js";
+import { mouseDown, setCanvasSize } from "./utils.js";
 import { Earth } from "./Earth.js";
 import { Sun } from "./Sun.js";
 import { GasRing } from "./GasRing.js";
@@ -19,11 +19,32 @@ class Game {
     this._addGasRing();
     this.start = false;
     this.addedSunRay = false;
+
+    this.rotation = 0;
+    this.prevMousePos = [0, 0];
+    this.rotating = false;
   }
+
+  rotate(event) {
+    if (this.rotating) {
+      console.log(this.rotating);
+      const mousePos = mouseDown(event, this.canvas);
+      const num = Math.abs(mousePos[0] - this.prevMousePos[0]) * 0.0025;
+      if (this.prevMousePos[0] < mousePos[0]) {
+        this.rotation -= num;
+      } else {
+        // console.log((mousePos[0] - this.prevMousePos[0]) * 0.005);
+        this.rotation += num;
+      }
+      this.prevMousePos = mousePos;
+    }
+  }
+
   _fillBackground = () => {
     this.ctx.fillStyle = "rgb(31, 35, 51)";
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
   };
+
   _addEarth = () => {
     const smallest = this.width < this.height ? this.width : this.height;
     this.earth = new Earth(
@@ -35,6 +56,7 @@ class Game {
     );
     this.earth.draw();
   };
+
   _addGasRing = () => {
     const smallest = this.width < this.height ? this.width : this.height;
     this.gasRing = new GasRing(
@@ -45,6 +67,7 @@ class Game {
     );
     this.gasRing.draw();
   };
+
   _addSun = () => {
     const smallest = this.width < this.height ? this.width : this.height;
     this.sun = new Sun(
@@ -54,6 +77,7 @@ class Game {
       smallest / 10
     );
   };
+
   _addSunRays = () => {
     const smallest = this.width < this.height ? this.width : this.height;
     const sunRay = new SunRay(
@@ -69,6 +93,7 @@ class Game {
     this.sunRays.push(sunRay);
     setTimeout(this._addSunRays.bind(this), 1500);
   };
+
   _moveEarthToStartingPosition = () => {
     this.earth.moveToX(this.width / 2, 2);
 
@@ -82,6 +107,7 @@ class Game {
       );
     }
   };
+
   _moveRingToStartingPosition = () => {
     this.gasRing.moveToX(this.width / 2, 2);
 
@@ -95,15 +121,17 @@ class Game {
       );
     }
   };
+
   setup = () => {
     this._moveEarthToStartingPosition();
     this._moveRingToStartingPosition();
   };
+
   update = () => {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this._fillBackground();
-    this.gasRing.draw();
-    this.earth.draw();
+    this.gasRing.draw(this.rotation);
+    this.earth.draw(this.rotation);
     if (this.start) {
       this.sun.draw();
       //   if (this.sunRay.towardsPlanet) {
@@ -146,13 +174,13 @@ export const game = new Game();
 window.requestAnimationFrame(game.update.bind(game));
 
 window.addEventListener("mousedown", () => {
-  game.earth.rotating = true;
+  game.rotating = true;
 });
 
 window.addEventListener("mouseup", () => {
-  game.earth.rotating = false;
+  game.rotating = false;
 });
 
 window.addEventListener("mousemove", (event) => {
-  game.earth.rotate(event);
+  game.rotate(event);
 });
