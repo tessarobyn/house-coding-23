@@ -62,22 +62,32 @@ export class SunRay {
   setAngle(angle) {
     this.angle = angle;
   }
-  setRandomAngle() {
-    let num1 = this.angle - Math.PI / 2;
-    let num2 = this.angle + Math.PI / 2;
-    if (num1 < 0) {
-      num1 = Math.PI * 2 - Math.abs(num1);
+  setRandomAngle(radiusAngle) {
+    let newAngle = radiusAngle;
+    // if (radiusAngle <= Math.PI) {
+    //   newAngle = radiusAngle + Math.PI;
+    // } else {
+    //   newAngle = radiusAngle - Math.PI;
+    // }
+    const randomAngle = Math.random() * (Math.PI / 2);
+    if (Math.random() > 0.5 && newAngle <= Math.PI * 2 - randomAngle) {
+      newAngle += randomAngle;
+    } else {
+      newAngle -= randomAngle;
     }
-    if (num2 > Math.PI * 2) {
-      num2 -= Math.PI * 2;
-    }
-    return Math.floor(Math.random() * (num2 - num1)) + num1;
+    return newAngle;
   }
   checkCollisionWithRing(ringX, ringY, ringRadius) {
     const distanceToRingCentre =
       ((this.x - ringX) ** 2 + (this.y - ringY) ** 2) ** (1 / 2);
     if (distanceToRingCentre + this.radius >= ringRadius) {
-      this.angle = this.setRandomAngle();
+      const radiusAngle = this.calculateAngleBetweenTwoPoints(
+        this.x,
+        this.y,
+        ringX,
+        ringY
+      );
+      this.angle = this.setRandomAngle(radiusAngle);
       this.movingTowardsEarth = true;
     }
   }
@@ -85,7 +95,14 @@ export class SunRay {
     const distanceToEarthCentre =
       ((this.x - earthX) ** 2 + (this.y - earthY) ** 2) ** (1 / 2);
     if (distanceToEarthCentre - this.radius <= earthRadius) {
-      this.angle = this.setRandomAngle() + Math.PI;
+      const radiusAngle = this.calculateAngleBetweenTwoPoints(
+        earthX,
+        earthY,
+        this.x,
+        this.y
+      );
+      this.angle = this.setRandomAngle(radiusAngle);
+      console.log(radiusAngle);
       this.movingTowardsEarth = false;
     }
   }
