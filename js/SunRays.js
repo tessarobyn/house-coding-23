@@ -77,7 +77,15 @@ export class SunRay {
     }
     return newAngle;
   }
-  checkCollisionWithRing(ringX, ringY, ringRadius) {
+
+  correctWallAngle(angle) {
+    angle += Math.PI / 2;
+    if (angle > Math.PI * 2) {
+      angle = angle - Math.PI * 2;
+    }
+    return angle;
+  }
+  checkCollisionWithRing(ringX, ringY, ringRadius, ringWallPairs) {
     const distanceToRingCentre =
       ((this.x - ringX) ** 2 + (this.y - ringY) ** 2) ** (1 / 2);
     if (distanceToRingCentre + this.radius >= ringRadius) {
@@ -87,7 +95,27 @@ export class SunRay {
         this.x,
         this.y
       );
-      this.angle = this.setRandomAngle(radiusAngle) + Math.PI;
+      let hitWall = false;
+      for (let i = 0; i < ringWallPairs.length; i++) {
+        const angle1 = this.correctWallAngle(ringWallPairs[i][0]);
+        const angle2 = this.correctWallAngle(ringWallPairs[i][1]);
+        const smallestAngle = angle1 < angle2 ? angle1 : angle2;
+        const largestAngle = smallestAngle == angle1 ? angle2 : angle1;
+        console.log(smallestAngle);
+        console.log(largestAngle);
+        if (
+          (radiusAngle >= 0 && radiusAngle <= smallestAngle) ||
+          (radiusAngle >= largestAngle && radiusAngle <= Math.PI * 2)
+        ) {
+          console.log("here");
+          hitWall = true;
+        }
+      }
+      if (hitWall) {
+        this.angle = this.setRandomAngle(radiusAngle) + Math.PI;
+      } else {
+        this.escaped = true;
+      }
     }
   }
   checkCollisionWithEarth(earthX, earthY, earthRadius) {

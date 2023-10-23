@@ -152,11 +152,12 @@ class Game {
           this.earth.y,
           this.earth.radius
         );
-        if (this.sunRays[i].hadFirstCollision) {
+        if (this.sunRays[i].hadFirstCollision && !this.sunRays[i].escaped) {
           this.sunRays[i].checkCollisionWithRing(
             this.gasRing.x,
             this.gasRing.y,
-            this.gasRing.radius
+            this.gasRing.radius,
+            this.gasRing.wallPairs
           );
         }
 
