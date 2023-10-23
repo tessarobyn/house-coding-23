@@ -63,7 +63,16 @@ export class SunRay {
     this.angle = angle;
   }
   setRandomAngle() {
-    return Math.floor(Math.random() * (Math.PI * 2 + 1));
+    let num1 = this.angle - Math.PI / 2;
+    let num2 = this.angle + Math.PI / 2;
+    if (num1 < 0) {
+      num1 = Math.PI * 2 - Math.abs(num1);
+    }
+    if (num2 > Math.PI * 2) {
+      num2 -= Math.PI * 2;
+    }
+    const num = Math.floor(Math.random() * (num2 - num1 + 1)) + num1;
+    return num + Math.PI;
   }
   checkCollisionWithEarth(earthX, earthY, earthRadius) {
     const distanceToEarthCentre =

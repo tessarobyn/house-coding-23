@@ -125,7 +125,6 @@ class Game {
             this.earth.radius
           );
         }
-
         this.sunRays[i].moveOnAngle();
         this.sunRays[i].draw();
       }
