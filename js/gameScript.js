@@ -26,9 +26,10 @@ class Game {
   }
 
   rotate(event) {
+    const mousePos = mouseDown(event, this.canvas);
     if (this.rotating) {
       console.log(this.rotating);
-      const mousePos = mouseDown(event, this.canvas);
+
       const num = Math.abs(mousePos[0] - this.prevMousePos[0]) * 0.0025;
       if (this.prevMousePos[0] < mousePos[0]) {
         this.rotation -= num;
@@ -36,8 +37,9 @@ class Game {
         // console.log((mousePos[0] - this.prevMousePos[0]) * 0.005);
         this.rotation += num;
       }
-      this.prevMousePos = mousePos;
     }
+    this.prevMousePos = mousePos;
+    console.log(this.rotation);
   }
 
   _fillBackground = () => {
@@ -157,7 +159,8 @@ class Game {
             this.gasRing.x,
             this.gasRing.y,
             this.gasRing.radius,
-            this.gasRing.wallPairs
+            this.gasRing.wallPairs,
+            this.rotation
           );
         }
 

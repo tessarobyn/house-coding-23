@@ -85,7 +85,17 @@ export class SunRay {
     }
     return angle;
   }
-  checkCollisionWithRing(ringX, ringY, ringRadius, ringWallPairs) {
+
+  addRotationToAngle(rotation, angle) {
+    angle += Math.PI * rotation;
+    if (angle > Math.PI * 2) {
+      angle -= Math.PI * 2;
+    } else if (angle < 0) {
+      angle += Math.PI * 2;
+    }
+    return angle;
+  }
+  checkCollisionWithRing(ringX, ringY, ringRadius, ringWallPairs, rotation) {
     const distanceToRingCentre =
       ((this.x - ringX) ** 2 + (this.y - ringY) ** 2) ** (1 / 2);
     if (distanceToRingCentre + this.radius >= ringRadius) {
@@ -97,8 +107,14 @@ export class SunRay {
       );
       let hitWall = false;
       for (let i = 0; i < ringWallPairs.length; i++) {
-        const startOfWallAngle = this.correctWallAngle(ringWallPairs[i][0]);
-        const endOfWallAngle = this.correctWallAngle(ringWallPairs[i][1]);
+        const startOfWallAngle = this.addRotationToAngle(
+          rotation,
+          this.correctWallAngle(ringWallPairs[i][0])
+        );
+        const endOfWallAngle = this.addRotationToAngle(
+          rotation,
+          this.correctWallAngle(ringWallPairs[i][1])
+        );
         if (startOfWallAngle > endOfWallAngle) {
           if (
             (startOfWallAngle <= radiusAngle && radiusAngle <= Math.PI * 2) ||
