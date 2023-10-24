@@ -4,13 +4,16 @@ export class GasRing {
     this.x = x;
     this.y = y;
     this.radius = radius;
-    this.wallPairs = [[0, Math.PI * 1.75]];
     // this.wallPairs = [
-    //   [0, Math.PI * 0.25],
-    //   [Math.PI / 3, Math.PI],
-    //   [Math.PI * 1.1, Math.PI * 1.5],
-    //   [Math.PI * 1.7, Math.PI * 1.8],
+    //   [Math.PI * 1.8, Math.PI * 0.7],
+    //   [Math.PI * 1, Math.PI * 1.5],
     // ];
+    this.wallPairs = [
+      [0, Math.PI * 0.3],
+      [Math.PI / 3, Math.PI],
+      [Math.PI * 1.1, Math.PI * 1.6],
+      [Math.PI * 1.7, Math.PI * 1.8],
+    ];
   }
   draw(rotation) {
     for (let i = 0; i < this.wallPairs.length; i++) {

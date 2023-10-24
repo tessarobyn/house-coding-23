@@ -97,20 +97,26 @@ export class SunRay {
       );
       let hitWall = false;
       for (let i = 0; i < ringWallPairs.length; i++) {
-        const angle1 = this.correctWallAngle(ringWallPairs[i][0]);
-        const angle2 = this.correctWallAngle(ringWallPairs[i][1]);
-        const smallestAngle = angle1 < angle2 ? angle1 : angle2;
-        const largestAngle = smallestAngle == angle1 ? angle2 : angle1;
-        console.log(smallestAngle);
-        console.log(largestAngle);
-        if (
-          (radiusAngle >= 0 && radiusAngle <= smallestAngle) ||
-          (radiusAngle >= largestAngle && radiusAngle <= Math.PI * 2)
-        ) {
-          console.log("here");
-          hitWall = true;
+        const startOfWallAngle = this.correctWallAngle(ringWallPairs[i][0]);
+        const endOfWallAngle = this.correctWallAngle(ringWallPairs[i][1]);
+        if (startOfWallAngle > endOfWallAngle) {
+          if (
+            (startOfWallAngle <= radiusAngle && radiusAngle <= Math.PI * 2) ||
+            (0 <= radiusAngle && radiusAngle <= endOfWallAngle)
+          ) {
+            hitWall = true;
+          }
+        } else {
+          if (
+            startOfWallAngle <= radiusAngle &&
+            radiusAngle <= endOfWallAngle
+          ) {
+            hitWall = true;
+          }
         }
       }
+
+      //   hitWall = !hitWall;
       if (hitWall) {
         this.angle = this.setRandomAngle(radiusAngle) + Math.PI;
       } else {
