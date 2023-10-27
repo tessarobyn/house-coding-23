@@ -5,6 +5,10 @@ const animateHomeContent = () => {
   titleContainer.classList.add("animateTitle");
   const buttonContainer = document.getElementById("buttonContainer");
   buttonContainer.classList.add("animateButton");
+  const sunRaysCountContainer = document.getElementById(
+    "sunRaysCountContainer"
+  );
+  sunRaysCountContainer.classList.add("animateSunRaysCount");
   game.setup();
 };
 

@@ -124,6 +124,11 @@ class Game {
     }
   };
 
+  _updateTrappedRayCount = (count) => {
+    const sunRaysCount = document.getElementById("sunRayCount");
+    sunRaysCount.innerHTML = `${count} Sun rays trapped in Earth's atmosphere`;
+  };
+
   setup = () => {
     this._moveEarthToStartingPosition();
     this._moveRingToStartingPosition();
@@ -134,6 +139,7 @@ class Game {
     this._fillBackground();
     this.gasRing.draw(this.rotation);
     this.earth.draw(this.rotation);
+
     if (this.start) {
       //   if (this.sunRay.towardsPlanet) {
       //     this.sunRay.moveTowardsPlanet(
@@ -147,6 +153,7 @@ class Game {
         this.addedSunRay = true;
       }
 
+      let trappedRaysCount = 0;
       for (let i = 0; i < this.sunRays.length; i++) {
         this.sunRays[i].checkCollisionWithEarth(
           this.earth.x,
@@ -154,6 +161,7 @@ class Game {
           this.earth.radius
         );
         if (this.sunRays[i].hadFirstCollision && !this.sunRays[i].escaped) {
+          trappedRaysCount += 1;
           this.sunRays[i].checkCollisionWithRing(
             this.gasRing.x,
             this.gasRing.y,
@@ -166,6 +174,7 @@ class Game {
         this.sunRays[i].moveOnAngle();
         this.sunRays[i].draw();
       }
+      this._updateTrappedRayCount(trappedRaysCount);
       this.sun.draw();
     }
 

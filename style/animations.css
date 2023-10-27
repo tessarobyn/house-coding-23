@@ -12,6 +12,13 @@
   animation-timing-function: linear;
 }
 
+.animateSunRaysCount {
+  animation-name: slide-down;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
 @keyframes slide-left {
   from {
     left: 0;
@@ -30,5 +37,14 @@
   to {
     right: -20%;
     opacity: 0;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    top: -100px;
+  }
+  to {
+    top: 0;
   }
 }
