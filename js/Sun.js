@@ -4,11 +4,16 @@ export class Sun {
     this.x = x;
     this.y = y;
     this.radius = radius;
+    this.sun = new Image();
+    this.sun.src = "img/Sun.PNG";
   }
   draw() {
-    const sun = new Path2D();
-    sun.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    this.ctx.fillStyle = "rgb(255, 247, 8)";
-    this.ctx.fill(sun);
+    this.ctx.drawImage(
+      this.sun,
+      this.x - this.radius,
+      this.y - this.radius,
+      this.radius * 2,
+      this.radius * 2
+    );
   }
 }

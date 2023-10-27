@@ -135,7 +135,6 @@ class Game {
     this.gasRing.draw(this.rotation);
     this.earth.draw(this.rotation);
     if (this.start) {
-      this.sun.draw();
       //   if (this.sunRay.towardsPlanet) {
       //     this.sunRay.moveTowardsPlanet(
       //       this.earth.x,
@@ -167,6 +166,7 @@ class Game {
         this.sunRays[i].moveOnAngle();
         this.sunRays[i].draw();
       }
+      this.sun.draw();
     }
 
     window.requestAnimationFrame(this.update.bind(this));
