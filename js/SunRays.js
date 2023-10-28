@@ -97,9 +97,10 @@ export class SunRay {
 
   addRotationToAngle(rotation, angle) {
     angle += Math.PI * rotation;
-    if (angle > Math.PI * 2) {
+    while (angle > Math.PI * 2) {
       angle -= Math.PI * 2;
-    } else if (angle < 0) {
+    }
+    while (angle < 0) {
       angle += Math.PI * 2;
     }
     return angle;
