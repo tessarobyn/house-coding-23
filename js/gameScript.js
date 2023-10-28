@@ -128,7 +128,7 @@ export class Game {
   _updateTrappedRayCount = () => {
     const sunRaysCount = document.getElementById("sunRayCount");
     sunRaysCount.innerHTML = this.count;
-    if (this.count >= 3) {
+    if (this.count >= 10) {
       this.pause = true;
     }
   };
