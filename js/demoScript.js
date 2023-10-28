@@ -163,14 +163,25 @@ class Demo {
     });
   };
 
+  cleanUpdate = () => {
+    this.ctx.clearRect(0, 0, this.width, this.height);
+    this._fillBackground();
+    this.atmosphere.draw(this.count);
+    if (this.showGasRing) {
+      this.gasRing.draw(0);
+    }
+    this.earth.draw(0);
+    this.sun.draw();
+  };
+
   update = () => {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this._fillBackground();
     this.atmosphere.draw(this.count);
     if (this.showGasRing) {
-      this.gasRing.draw(this.rotation);
+      this.gasRing.draw(0);
     }
-    this.earth.draw(this.rotation);
+    this.earth.draw(0);
 
     if (this.start) {
       if (!this.addedSunRay) {
@@ -247,7 +258,10 @@ class Demo {
         "sunRaysCountContainer"
       );
       sunRaysCountContainer.classList.add("animateSunRaysCount");
-      window.requestAnimationFrame(game.update.bind(game));
+      this.cleanUpdate();
+      setTimeout(() => {
+        window.requestAnimationFrame(game.update.bind(game));
+      }, 2000);
     }
   };
 }
