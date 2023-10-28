@@ -1,17 +1,12 @@
 import { randFloat, randInt } from "./utils.js";
 
 export class GasRing {
-  constructor(ctx, x, y, radius) {
+  constructor(ctx, x, y, radius, wallPairs) {
     this.ctx = ctx;
     this.x = x;
     this.y = y;
     this.radius = radius;
-    this.wallPairs = [
-      [0, Math.PI * 0.3],
-      [Math.PI * 0.35, Math.PI],
-      [Math.PI * 1.1, Math.PI * 1.6],
-      [Math.PI * 1.7, Math.PI * 1.8],
-    ];
+    this.wallPairs = wallPairs;
     // this.wallPairs = [];
     // this._generateWalls();
   }

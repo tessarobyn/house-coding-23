@@ -25,6 +25,7 @@ class Demo {
     this.start = false;
     this.addedSunRay = false;
     this.previousCard = 0;
+    this.finished = false;
   }
 
   _fillBackground = () => {
@@ -60,11 +61,18 @@ class Demo {
 
   _addGasRing = () => {
     const smallest = this.width < this.height ? this.width : this.height;
+    const wallPairs = [
+      [0, Math.PI * 0.3],
+      [Math.PI * 0.35, Math.PI * 0.5],
+      [Math.PI * 0.6, Math.PI * 1.6],
+      [Math.PI * 1.7, Math.PI * 1.8],
+    ];
     this.gasRing = new GasRing(
       this.ctx,
       this.width * 0.7,
       this.height / 2,
-      smallest / 2.75
+      smallest / 2.75,
+      wallPairs
     );
     this.gasRing.draw();
   };
@@ -163,17 +171,6 @@ class Demo {
     });
   };
 
-  cleanUpdate = () => {
-    this.ctx.clearRect(0, 0, this.width, this.height);
-    this._fillBackground();
-    this.atmosphere.draw(this.count);
-    if (this.showGasRing) {
-      this.gasRing.draw(0);
-    }
-    this.earth.draw(0);
-    this.sun.draw();
-  };
-
   update = () => {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this._fillBackground();
@@ -251,44 +248,11 @@ class Demo {
 
       this.sun.draw();
     }
-    if (this.previousCard != 6) {
+    if (this.previousCard != 6 && !this.finished) {
       window.requestAnimationFrame(this.update.bind(this));
-    } else {
-      const sunRaysCountContainer = document.getElementById(
-        "sunRaysCountContainer"
-      );
-      sunRaysCountContainer.classList.add("animateSunRaysCount");
-      this.cleanUpdate();
-      setTimeout(() => {
-        window.requestAnimationFrame(game.update.bind(game));
-      }, 2000);
     }
   };
 }
 
 export const demo = new Demo();
 window.requestAnimationFrame(demo.update.bind(demo));
-
-// window.addEventListener("mousedown", () => {
-//   demo.rotating = true;
-// });
-
-// window.addEventListener("mouseup", () => {
-//   demo.rotating = false;
-// });
-
-// window.addEventListener("mousemove", (event) => {
-//   demo.rotate(event);
-// });
-
-// window.addEventListener("mousedown", () => {
-//   game.rotating = true;
-// });
-
-// window.addEventListener("mouseup", () => {
-//   game.rotating = false;
-// });
-
-// window.addEventListener("mousemove", (event) => {
-//   game.rotate(event);
-// });

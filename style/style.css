@@ -29,8 +29,11 @@ h1 {
   font-weight: 900;
   line-height: 80%;
   text-transform: uppercase;
-  margin: 0;
   font-stretch: 80%;
+  margin: 0;
+}
+
+.title {
   width: 0;
   overflow: visible;
 }
@@ -57,7 +60,8 @@ h1 {
   right: 20px;
 }
 
-.buttonContainer > button {
+.playButton,
+.startButton {
   background-color: #e55934;
   border: none;
   padding: 10px 20px;
@@ -69,8 +73,13 @@ h1 {
   transition: background-color 0.2s ease;
 }
 
-.buttonContainer > button:hover {
+.playButton:hover,
+.startButton:hover {
   background-color: #e74b1f;
+}
+
+.startButton {
+  margin-right: 10px;
 }
 
 .sunRaysCountContainer {
@@ -102,8 +111,7 @@ h1 {
   visibility: hidden;
 }
 
-.card > button,
-.card6 > button {
+.card > button {
   background-color: #e55934;
   border: none;
   font-family: "Anybody", sans-serif;
@@ -112,10 +120,23 @@ h1 {
 
 .card6 {
   position: fixed;
-  background-color: #e55934;
-  color: #1f2333;
-  top: 40%;
-  padding: 20px 10%;
+  background-color: #1f2333;
+  color: #e4e9e8;
+  top: 0%;
+  padding: 5% 10%;
   width: 80%;
+  height: 90%;
   visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card6 > p {
+  font-size: 1.25rem;
+}
+
+.card6 > button {
+  margin-top: 2rem;
 }
