@@ -21,7 +21,7 @@ class Game {
     this._addGasRing();
     this.start = false;
     this.addedSunRay = false;
-
+    this.count = 0;
     this.rotation = 0;
     this.prevMousePos = [0, 0];
     this.rotating = false;
@@ -69,7 +69,7 @@ class Game {
 
       smallest / 2.75
     );
-    this.atmosphere.draw();
+    this.atmosphere.draw(this.count);
   };
 
   _addGasRing = () => {
@@ -149,9 +149,9 @@ class Game {
     }
   };
 
-  _updateTrappedRayCount = (count) => {
+  _updateTrappedRayCount = () => {
     const sunRaysCount = document.getElementById("sunRayCount");
-    sunRaysCount.innerHTML = count;
+    sunRaysCount.innerHTML = this.count;
   };
 
   setup = () => {
@@ -163,7 +163,7 @@ class Game {
   update = () => {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this._fillBackground();
-    this.atmosphere.draw();
+    this.atmosphere.draw(this.count);
     this.gasRing.draw(this.rotation);
     this.earth.draw(this.rotation);
 
@@ -218,8 +218,9 @@ class Game {
       for (let i = 0; i < removeIndexes.length; i++) {
         this.sunRays.splice(removeIndexes[i], 1);
       }
+      this.count = trappedRaysCount;
 
-      this._updateTrappedRayCount(trappedRaysCount);
+      this._updateTrappedRayCount();
       this.sun.draw();
     }
 
