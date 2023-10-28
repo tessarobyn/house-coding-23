@@ -134,11 +134,12 @@ h1 {
   font-size: 2rem;
 }
 
-.card6 {
+.card6,
+.gameOver {
   position: fixed;
   background-color: #1f2333;
   color: #e4e9e8;
-  top: 0%;
+  top: 0;
   padding: 5% 10%;
   width: 80%;
   height: 90%;
@@ -155,4 +156,8 @@ h1 {
 
 .card6 > button {
   margin-top: 2rem;
+}
+
+.showScreen {
+  visibility: visible;
 }

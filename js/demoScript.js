@@ -1,10 +1,8 @@
-import { mouseDown, setCanvasSize } from "./utils.js";
 import { Earth } from "./Earth.js";
 import { Sun } from "./Sun.js";
 import { GasRing } from "./GasRing.js";
 import { SunRay } from "./SunRays.js";
 import { EarthAtmosphere } from "./EarthAtmosphere.js";
-import { game } from "./gameScript.js";
 
 class Demo {
   constructor() {

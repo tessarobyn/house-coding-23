@@ -1,5 +1,5 @@
 import { demo } from "./demoScript.js";
-import { game } from "./gameScript.js";
+import { Game } from "./gameScript.js";
 
 const animateHomeContent = () => {
   const titleContainer = document.getElementById("titleContainer");
@@ -26,12 +26,22 @@ const startGame = () => {
   animateHomeContent();
   demo.finished = true;
   showScoreAndTimer();
+  const game = new Game();
   game.setupForImmediatePlay();
 };
 
 const startGameAfterDemo = () => {
   demo.finished = true;
   showScoreAndTimer();
+  const game = new Game();
+  game.setupAfterStart();
+};
+
+const startGameAgain = () => {
+  const gameOverScreen = document.getElementById("gameOver");
+  gameOverScreen.classList.remove("showScreen");
+  showScoreAndTimer();
+  const game = new Game();
   game.setupAfterStart();
 };
 
@@ -43,3 +53,6 @@ playButton.addEventListener("click", startGame);
 
 const playAfterDemoButton = document.getElementById("playAfterDemoButton");
 playAfterDemoButton.addEventListener("click", startGameAfterDemo);
+
+const playAgainButton = document.getElementById("playAgainButton");
+playAgainButton.addEventListener("click", startGameAgain);

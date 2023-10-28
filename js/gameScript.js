@@ -5,7 +5,7 @@ import { GasRing } from "./GasRing.js";
 import { SunRay } from "./SunRays.js";
 import { EarthAtmosphere } from "./EarthAtmosphere.js";
 
-class Game {
+export class Game {
   constructor() {
     this.canvas = document.getElementById("gameCanvas");
     this.canvas.width = document.body.clientWidth;
@@ -120,7 +120,9 @@ class Game {
       this.interval -= 5;
     }
     console.log(this.interval);
-    setTimeout(this._addSunRays.bind(this), this.interval);
+    if (!this.pause) {
+      setTimeout(this._addSunRays.bind(this), this.interval);
+    }
   };
 
   _updateTrappedRayCount = () => {
@@ -132,6 +134,7 @@ class Game {
   };
 
   setupAfterStart = () => {
+    this._setupMouseEvents();
     this._fillBackground();
     this._addAtmosphere(0.5);
     this._addEarth(0.5);
@@ -182,6 +185,7 @@ class Game {
   };
 
   setupForImmediatePlay = () => {
+    this._setupMouseEvents();
     this._fillBackground();
     this._addAtmosphere(0.7);
     this._addEarth(0.7);
@@ -191,6 +195,11 @@ class Game {
     this._moveEarthToStartingPosition();
     this._moveRingToStartingPosition();
     window.requestAnimationFrame(this.update.bind(this));
+  };
+
+  _showGameOverScreen = () => {
+    const gameOverScreen = document.getElementById("gameOver");
+    gameOverScreen.classList.add("showScreen");
   };
 
   _updateTimer = () => {
@@ -257,10 +266,9 @@ class Game {
             removeIndexes.push(i);
           }
         }
-        if (!this.pause) {
-          this.sunRays[i].moveOnAngle();
-          this._updateTimer();
-        }
+        this.sunRays[i].moveOnAngle();
+        this._updateTimer();
+
         this.sunRays[i].draw();
       }
       for (let i = 0; i < removeIndexes.length; i++) {
@@ -272,20 +280,24 @@ class Game {
     }
     this.sun.draw();
 
-    window.requestAnimationFrame(this.update.bind(this));
+    if (!this.pause) {
+      window.requestAnimationFrame(this.update.bind(this));
+    } else {
+      this._showGameOverScreen();
+    }
+  };
+
+  _setupMouseEvents = () => {
+    window.addEventListener("mousedown", () => {
+      this.rotating = true;
+    });
+
+    window.addEventListener("mouseup", () => {
+      this.rotating = false;
+    });
+
+    window.addEventListener("mousemove", (event) => {
+      this.rotate(event);
+    });
   };
 }
-
-export const game = new Game();
-
-window.addEventListener("mousedown", () => {
-  game.rotating = true;
-});
-
-window.addEventListener("mouseup", () => {
-  game.rotating = false;
-});
-
-window.addEventListener("mousemove", (event) => {
-  game.rotate(event);
-});
