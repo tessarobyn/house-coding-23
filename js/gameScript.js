@@ -30,13 +30,10 @@ class Game {
   rotate(event) {
     const mousePos = mouseDown(event, this.canvas);
     if (this.rotating) {
-      console.log(this.rotating);
-
       const num = Math.abs(mousePos[0] - this.prevMousePos[0]) * 0.0025;
       if (this.prevMousePos[0] < mousePos[0]) {
         this.rotation -= num;
       } else {
-        // console.log((mousePos[0] - this.prevMousePos[0]) * 0.005);
         this.rotation += num;
       }
     }
@@ -109,7 +106,7 @@ class Game {
       this.earth.y
     );
     this.sunRays.push(sunRay);
-    setTimeout(this._addSunRays.bind(this), 1500);
+    setTimeout(this._addSunRays.bind(this), 1000);
   };
 
   _moveEarthToStartingPosition = () => {
@@ -154,7 +151,7 @@ class Game {
 
   _updateTrappedRayCount = (count) => {
     const sunRaysCount = document.getElementById("sunRayCount");
-    sunRaysCount.innerHTML = `${count} Sun rays trapped in Earth's atmosphere`;
+    sunRaysCount.innerHTML = count;
   };
 
   setup = () => {
@@ -184,8 +181,17 @@ class Game {
           this.earth.y,
           this.earth.radius
         );
-        if (this.sunRays[i].hadFirstCollision && !this.sunRays[i].escaped) {
+        if (!this.sunRays[i].enteredAtmosphere) {
+          this.sunRays[i].checkIfEnteredAtmosphere(
+            this.gasRing.x,
+            this.gasRing.y,
+            this.gasRing.radius
+          );
+        }
+        if (this.sunRays[i].enteredAtmosphere && !this.sunRays[i].escaped) {
           trappedRaysCount += 1;
+        }
+        if (this.sunRays[i].hadFirstCollision && !this.sunRays[i].escaped) {
           this.sunRays[i].checkCollisionWithRing(
             this.gasRing.x,
             this.gasRing.y,
@@ -210,7 +216,6 @@ class Game {
         this.sunRays[i].draw();
       }
       for (let i = 0; i < removeIndexes.length; i++) {
-        console.log("removing");
         this.sunRays.splice(removeIndexes[i], 1);
       }
 

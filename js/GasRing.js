@@ -27,7 +27,7 @@ export class GasRing {
         this.wallPairs[i][0],
         this.wallPairs[i][1]
       );
-      this.ctx.strokeStyle = "rgb(255,255,255)";
+      this.ctx.strokeStyle = "rgb(175, 175, 175)";
       this.ctx.lineWidth = 5;
       this.ctx.stroke(gasRing);
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);

@@ -42,7 +42,7 @@
 
 @keyframes slide-down {
   from {
-    top: -100px;
+    top: -20rem;
   }
   to {
     top: 0;

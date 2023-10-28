@@ -4,7 +4,7 @@ export class SunRay {
     this.x = x;
     this.y = y;
     this.radius = sunRadius / 10;
-    this.magic = 2;
+    this.speed = 3;
     this.originX = x;
     this.originY = y;
     this.angle = this.calculateAngleBetweenTwoPoints(
@@ -15,6 +15,7 @@ export class SunRay {
     );
     this.hadFirstCollision = false;
     this.escaped = false;
+    this.enteredAtmosphere = false;
   }
   moveX() {
     this.x += 1;
@@ -30,8 +31,15 @@ export class SunRay {
     if (distanceTravelled >= distanceFromCentreToSurface) {
       this.towardsPlanet = false;
     } else {
-      this.y += diffY / this.magic;
-      this.x += diffX / this.magic;
+      this.y += diffY / this.speed;
+      this.x += diffX / this.speed;
+    }
+  }
+  checkIfEnteredAtmosphere(ringX, ringY, ringRadius) {
+    const distanceToRingCentre =
+      ((this.x - ringX) ** 2 + (this.y - ringY) ** 2) ** (1 / 2);
+    if (distanceToRingCentre + this.radius <= ringRadius) {
+      this.enteredAtmosphere = true;
     }
   }
   calculateAngleBetweenTwoPoints(x1, y1, x2, y2) {
@@ -59,6 +67,7 @@ export class SunRay {
     }
     console.log("ERROR!");
   }
+
   setAngle(angle) {
     this.angle = angle;
   }
@@ -155,8 +164,8 @@ export class SunRay {
     }
   }
   moveOnAngle() {
-    this.x += this.magic * Math.sin(this.angle);
-    this.y -= this.magic * Math.cos(this.angle);
+    this.x += this.speed * Math.sin(this.angle);
+    this.y -= this.speed * Math.cos(this.angle);
   }
   draw() {
     const sunRay = new Path2D();

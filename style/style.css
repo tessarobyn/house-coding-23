@@ -74,10 +74,18 @@ h1 {
 }
 
 .sunRaysCountContainer {
-  width: 96%;
+  width: 10rem;
   padding: 0 20px;
   position: fixed;
-  text-align: right;
-  top: -100px;
+  text-align: center;
+  top: -20rem;
   right: 0;
+}
+
+.count {
+  font-family: "Anybody", sans-serif;
+  font-size: 9em;
+  font-weight: 900;
+  margin-top: 2.5rem;
+  margin-bottom: 0;
 }
