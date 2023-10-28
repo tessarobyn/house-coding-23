@@ -1,3 +1,4 @@
+import { demo } from "./demoScript.js";
 import { game } from "./gameScript.js";
 
 const animateHomeContent = () => {
@@ -5,11 +6,8 @@ const animateHomeContent = () => {
   titleContainer.classList.add("animateTitle");
   const buttonContainer = document.getElementById("buttonContainer");
   buttonContainer.classList.add("animateButton");
-  const sunRaysCountContainer = document.getElementById(
-    "sunRaysCountContainer"
-  );
-  sunRaysCountContainer.classList.add("animateSunRaysCount");
-  game.setup();
+
+  demo.setup();
 };
 
 const startGame = () => {

@@ -89,3 +89,33 @@ h1 {
   margin-top: 2.5rem;
   margin-bottom: 0;
 }
+
+.card {
+  position: fixed;
+  background-color: #e55934;
+  color: #1f2333;
+  top: 0;
+  font-size: 1rem;
+  padding: 20px 25px;
+  width: 200px;
+  border-radius: 20px;
+  visibility: hidden;
+}
+
+.card > button,
+.card6 > button {
+  background-color: #e55934;
+  border: none;
+  font-family: "Anybody", sans-serif;
+  font-size: 2rem;
+}
+
+.card6 {
+  position: fixed;
+  background-color: #e55934;
+  color: #1f2333;
+  top: 40%;
+  padding: 20px 10%;
+  width: 80%;
+  visibility: hidden;
+}
