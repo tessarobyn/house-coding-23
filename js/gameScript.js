@@ -128,7 +128,7 @@ export class Game {
   _updateTrappedRayCount = () => {
     const sunRaysCount = document.getElementById("sunRayCount");
     sunRaysCount.innerHTML = this.count;
-    if (this.count >= 10) {
+    if (this.count >= 3) {
       this.pause = true;
     }
   };
@@ -200,15 +200,21 @@ export class Game {
   _showGameOverScreen = () => {
     const gameOverScreen = document.getElementById("gameOver");
     gameOverScreen.classList.add("showScreen");
+    const gameOverMessage = document.getElementById("gameOverMessage");
+    gameOverMessage.innerHTML = `Earth overheated in ${this.timer.innerHTML}`;
   };
 
-  _updateTimer = () => {
+  _getTimeValue = () => {
     const totalSeconds = Math.floor((Date.now() - this.startTime) / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-    this.timer.innerHTML = `${minutes.toString().padStart(2, "0")}:${seconds
+    return `${minutes.toString().padStart(2, "0")}:${seconds
       .toString()
       .padStart(2, "0")}`;
+  };
+
+  _updateTimer = () => {
+    this.timer.innerHTML = this._getTimeValue();
   };
 
   update = () => {
