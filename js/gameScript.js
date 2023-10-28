@@ -3,6 +3,7 @@ import { Earth } from "./Earth.js";
 import { Sun } from "./Sun.js";
 import { GasRing } from "./GasRing.js";
 import { SunRay } from "./SunRays.js";
+import { EarthAtmosphere } from "./EarthAtmosphere.js";
 
 class Game {
   constructor() {
@@ -14,6 +15,7 @@ class Game {
     this.ctx = this.canvas.getContext("2d");
     this.sunRays = [];
     this._fillBackground();
+    this._addAtmosphere();
     this._addEarth();
     this._addSun();
     this._addGasRing();
@@ -54,9 +56,23 @@ class Game {
       this.ctx,
       this.width * 0.7,
       this.height / 2,
-      smallest / 5
+      smallest / 5,
+      smallest / 2.75
     );
     this.earth.draw();
+  };
+
+  _addAtmosphere = () => {
+    const smallest = this.width < this.height ? this.width : this.height;
+    this.atmosphere = new EarthAtmosphere(
+      this.canvas,
+      this.ctx,
+      this.width * 0.7,
+      this.height / 2,
+
+      smallest / 2.75
+    );
+    this.atmosphere.draw();
   };
 
   _addGasRing = () => {
@@ -110,13 +126,25 @@ class Game {
     }
   };
 
+  _moveAtmosphereToStartingPosition = () => {
+    this.atmosphere.moveToX(this.width / 2, 2);
+
+    let setupAtmosphereFrames;
+    if (Math.round(this.earth.x) <= this.width / 2) {
+      cancelAnimationFrame(setupAtmosphereFrames);
+    } else {
+      setupAtmosphereFrames = window.requestAnimationFrame(
+        this._moveAtmosphereToStartingPosition.bind(this)
+      );
+    }
+  };
+
   _moveRingToStartingPosition = () => {
     this.gasRing.moveToX(this.width / 2, 2);
 
     let setupRingFrames;
     if (Math.round(this.gasRing.x) <= this.width / 2) {
       cancelAnimationFrame(setupRingFrames);
-      this.start = true;
     } else {
       setupRingFrames = window.requestAnimationFrame(
         this._moveRingToStartingPosition.bind(this)
@@ -130,6 +158,7 @@ class Game {
   };
 
   setup = () => {
+    this._moveAtmosphereToStartingPosition();
     this._moveEarthToStartingPosition();
     this._moveRingToStartingPosition();
   };
@@ -137,23 +166,18 @@ class Game {
   update = () => {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this._fillBackground();
+    this.atmosphere.draw();
     this.gasRing.draw(this.rotation);
     this.earth.draw(this.rotation);
 
     if (this.start) {
-      //   if (this.sunRay.towardsPlanet) {
-      //     this.sunRay.moveTowardsPlanet(
-      //       this.earth.x,
-      //       this.earth.y,
-      //       this.earth.radius
-      //     );
-      //   }
       if (!this.addedSunRay) {
         this._addSunRays();
         this.addedSunRay = true;
       }
 
       let trappedRaysCount = 0;
+      const removeIndexes = [];
       for (let i = 0; i < this.sunRays.length; i++) {
         this.sunRays[i].checkCollisionWithEarth(
           this.earth.x,
@@ -171,9 +195,25 @@ class Game {
           );
         }
 
+        if (this.sunRays[i].escaped) {
+          if (
+            this.sunRays[i].x < 0 ||
+            this.sunRays[i].x > this.canvas.width ||
+            this.sunRays[i].y < 0 ||
+            this.sunRays[i].y > this.canvas.height
+          ) {
+            removeIndexes.push(i);
+          }
+        }
+
         this.sunRays[i].moveOnAngle();
         this.sunRays[i].draw();
       }
+      for (let i = 0; i < removeIndexes.length; i++) {
+        console.log("removing");
+        this.sunRays.splice(removeIndexes[i], 1);
+      }
+
       this._updateTrappedRayCount(trappedRaysCount);
       this.sun.draw();
     }
@@ -183,7 +223,6 @@ class Game {
 }
 
 export const game = new Game();
-// Starts animation loop - could move so it is when gameplay starts?
 window.requestAnimationFrame(game.update.bind(game));
 
 window.addEventListener("mousedown", () => {
