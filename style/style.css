@@ -29,8 +29,11 @@ h1 {
   font-weight: 900;
   line-height: 80%;
   text-transform: uppercase;
-  margin: 0;
   font-stretch: 80%;
+  margin: 0;
+}
+
+.title {
   width: 0;
   overflow: visible;
 }
@@ -53,14 +56,13 @@ h1 {
 
 .buttonContainer {
   position: fixed;
-
   bottom: 20px;
   right: 20px;
 }
 
-.buttonContainer > button {
+.playButton,
+.startButton {
   background-color: #e55934;
-
   border: none;
   padding: 10px 20px;
   font-family: "Anybody", sans-serif;
@@ -71,6 +73,91 @@ h1 {
   transition: background-color 0.2s ease;
 }
 
-.buttonContainer > button:hover {
+.playButton:hover,
+.startButton:hover {
   background-color: #e74b1f;
+}
+
+.startButton {
+  margin-right: 10px;
+}
+
+.sunRaysCountContainer {
+  width: 10rem;
+  padding: 0 20px;
+  position: fixed;
+  text-align: center;
+  top: -20rem;
+  right: 0;
+}
+
+.timerContainer {
+  padding: 20px 40px;
+  position: fixed;
+  text-align: right;
+  bottom: -20rem;
+  right: 0;
+}
+
+.count,
+.timer {
+  font-family: "Anybody", sans-serif;
+  font-weight: 900;
+  margin-top: 2.5rem;
+  margin-bottom: 0;
+}
+
+.count {
+  font-size: 9em;
+}
+
+.timer {
+  font-size: 3.5em;
+}
+
+.card {
+  position: fixed;
+  background-color: #e55934;
+  color: #1f2333;
+  top: 0;
+  font-size: 1rem;
+  padding: 20px 25px;
+  width: 200px;
+  border-radius: 20px;
+  visibility: hidden;
+}
+
+.card > button {
+  background-color: #e55934;
+  border: none;
+  font-family: "Anybody", sans-serif;
+  font-size: 2rem;
+}
+
+.card6,
+.gameOver {
+  position: fixed;
+  background-color: #1f2333;
+  color: #e4e9e8;
+  top: 0;
+  padding: 5% 10%;
+  width: 80%;
+  height: 90%;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card6 > p {
+  font-size: 1.25rem;
+}
+
+.card6 > button {
+  margin-top: 2rem;
+}
+
+.showScreen {
+  visibility: visible;
 }
