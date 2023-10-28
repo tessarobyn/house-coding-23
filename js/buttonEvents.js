@@ -13,23 +13,25 @@ const startDemo = () => {
   demo.setup();
 };
 
-const showScore = () => {
+const showScoreAndTimer = () => {
   const sunRaysCountContainer = document.getElementById(
     "sunRaysCountContainer"
   );
   sunRaysCountContainer.classList.add("animateSunRaysCount");
+  const timerContainer = document.getElementById("timerContainer");
+  timerContainer.classList.add("animateTimer");
 };
 
 const startGame = () => {
   animateHomeContent();
   demo.finished = true;
-  showScore();
+  showScoreAndTimer();
   game.setupForImmediatePlay();
 };
 
 const startGameAfterDemo = () => {
   demo.finished = true;
-  showScore();
+  showScoreAndTimer();
   game.setupAfterStart();
 };
 

@@ -19,6 +19,13 @@
   animation-timing-function: linear;
 }
 
+.animateTimer {
+  animation-name: slide-up;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
 @keyframes slide-left {
   from {
     left: 0;
@@ -46,5 +53,14 @@
   }
   to {
     top: 0;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    bottom: -20rem;
+  }
+  to {
+    bottom: 0;
   }
 }

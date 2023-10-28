@@ -91,12 +91,28 @@ h1 {
   right: 0;
 }
 
-.count {
+.timerContainer {
+  padding: 20px 40px;
+  position: fixed;
+  text-align: right;
+  bottom: -20rem;
+  right: 0;
+}
+
+.count,
+.timer {
   font-family: "Anybody", sans-serif;
-  font-size: 9em;
   font-weight: 900;
   margin-top: 2.5rem;
   margin-bottom: 0;
+}
+
+.count {
+  font-size: 9em;
+}
+
+.timer {
+  font-size: 3.5em;
 }
 
 .card {

@@ -14,13 +14,17 @@ class Game {
     this.height = this.canvas.height;
     this.ctx = this.canvas.getContext("2d");
     this.sunRays = [];
-
     this.start = false;
     this.addedSunRay = false;
     this.count = 0;
     this.rotation = 0;
     this.prevMousePos = [0, 0];
     this.rotating = false;
+
+    this.interval = 1200;
+
+    this.timer = document.getElementById("timer");
+    this.pause = false;
   }
 
   rotate(event) {
@@ -108,12 +112,23 @@ class Game {
       this.earth.y
     );
     this.sunRays.push(sunRay);
-    setTimeout(this._addSunRays.bind(this), 1200);
+    if (this.interval > 900) {
+      this.interval -= 20;
+    } else if (this.interval > 700) {
+      this.interval -= 10;
+    } else if (this.interval > 500) {
+      this.interval -= 5;
+    }
+    console.log(this.interval);
+    setTimeout(this._addSunRays.bind(this), this.interval);
   };
 
   _updateTrappedRayCount = () => {
     const sunRaysCount = document.getElementById("sunRayCount");
     sunRaysCount.innerHTML = this.count;
+    if (this.count >= 10) {
+      this.pause = true;
+    }
   };
 
   setupAfterStart = () => {
@@ -178,6 +193,15 @@ class Game {
     window.requestAnimationFrame(this.update.bind(this));
   };
 
+  _updateTimer = () => {
+    const totalSeconds = Math.floor((Date.now() - this.startTime) / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    this.timer.innerHTML = `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
   update = () => {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this._fillBackground();
@@ -186,6 +210,10 @@ class Game {
     this.earth.draw(this.rotation);
 
     if (this.start) {
+      if (this.startTime == undefined) {
+        this.startTime = Date.now();
+      }
+
       if (!this.addedSunRay) {
         this._addSunRays();
         this.addedSunRay = true;
@@ -229,8 +257,10 @@ class Game {
             removeIndexes.push(i);
           }
         }
-
-        this.sunRays[i].moveOnAngle();
+        if (!this.pause) {
+          this.sunRays[i].moveOnAngle();
+          this._updateTimer();
+        }
         this.sunRays[i].draw();
       }
       for (let i = 0; i < removeIndexes.length; i++) {
