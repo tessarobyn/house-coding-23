@@ -222,6 +222,7 @@ export class Game {
     this._fillBackground();
     this.atmosphere.draw(this.count);
     this.gasRing.draw(this.rotation);
+    this.gasRing.decreaseWalls();
     this.earth.draw(this.rotation);
 
     if (this.start) {

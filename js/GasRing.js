@@ -6,9 +6,34 @@ export class GasRing {
     this.x = x;
     this.y = y;
     this.radius = radius;
-    this.wallPairs = wallPairs;
-    // this.wallPairs = [];
+    this.wallPairs = this._generateWalls();
+    // this.wallPairs = [
+    //   [0, Math.PI * 0.3],
+    //   [Math.PI * 0.35, Math.PI],
+    //   [Math.PI * 1.1, Math.PI * 1.6],
+    //   [Math.PI * 1.7, Math.PI * 1.8],
+    // ];
     // this._generateWalls();
+  }
+
+  _generateWalls() {
+    const walls = [];
+    for (let i = 0; i < randInt(15, 25); i++) {
+      const start = randFloat(0, 2);
+      const gapLength = randFloat(0.1, 0.15);
+      let end = start + gapLength;
+      if (end > 2) {
+        end -= 2;
+      }
+      walls.push([start * Math.PI, end * Math.PI]);
+    }
+    return walls;
+  }
+
+  decreaseWalls() {
+    for (let i = 0; i < this.wallPairs.length; i++) {
+      this.wallPairs[i][0] -= (2 * Math.PI) / 100000;
+    }
   }
   // _generateWalls() {
   //   const smallestGap = 0.05;
