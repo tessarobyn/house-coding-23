@@ -30,7 +30,7 @@ export class GasRing {
     return walls;
   }
 
-  decreaseWalls() {
+  increaseWalls() {
     for (let i = 0; i < this.wallPairs.length; i++) {
       this.wallPairs[i][0] -= (2 * Math.PI) / 100000;
     }
