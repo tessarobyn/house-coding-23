@@ -18,7 +18,7 @@ export class GasRing {
 
   _generateWalls() {
     const walls = [];
-    for (let i = 0; i < randInt(15, 25); i++) {
+    for (let i = 0; i < randInt(20, 25); i++) {
       const start = randFloat(0, 2);
       const gapLength = randFloat(0.1, 0.15);
       let end = start + gapLength;
