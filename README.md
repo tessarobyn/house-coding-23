@@ -1,6 +1,6 @@
-# House Coding 2023
+# Global Warming Pong
 
-## Aim
+## Brief
 
 Write a program that demonstrates the link between global warming and man made gas emissions
 
