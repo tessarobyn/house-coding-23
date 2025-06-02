@@ -7,7 +7,7 @@ Write a program that demonstrates the link between global warming and man made g
 - Any language is acceptable
 - It could be an education tool, a game or a simulation?
 
-# Game Rules
+## Game Rules
 
 - Ensure that the number of sun rays trapped in Earth's atmosphere remains under ten.
 - Move by dragging to the left and right, which will rotate the Earth.
